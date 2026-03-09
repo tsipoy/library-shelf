@@ -1,73 +1,118 @@
-# React + TypeScript + Vite
+# Library Shelf
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React-based application that displays a collection of books with their details including title, author, category, and availability status. The app features a responsive, card-based layout showcasing books with cover images.
 
-Currently, two official plugins are available:
+## Project Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Library Shelf is designed to manage and display a personal or organizational book collection. Each book display includes:
+- **Cover Image**: Visual representation of the book
+- **Title & Author**: Book information
+- **Category**: Classification (e.g., Programming, Self Development, Psychology)
+- **Borrowed Status**: Indicator showing if a book is currently borrowed
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **React 19** - UI library
+- **TypeScript** - Type-safe JavaScript
+- **Vite** - Fast build tool and dev server with HMR
+- **Tailwind CSS** - Utility-first CSS framework
+- **ESLint** - Code linting
+- **PostCSS & Autoprefixer** - CSS processing
 
-## Expanding the ESLint configuration
+## Project Structure
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+src/
+├── components/
+│   └── main/
+│       └── DisplayedBooks/     # Book card grid component
+├── data/
+│   └── books.json              # Book collection data
+├── assets/                      # Book cover images
+├── App.tsx                      # Main app component
+├── main.tsx                     # Entry point
+└── index.css                    # Global styles
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Data Format
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Books are stored in [src/data/books.json](src/data/books.json) with the following structure:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```json
+{
+  "books": [
+    {
+      "id": "1",
+      "title": "Book Title",
+      "author": "Author Name",
+      "category": "Category Name",
+      "cover": "image-filename.jpg",
+      "borrowed": false
+    }
+  ]
+}
 ```
+
+### Assets
+
+Book cover images should be placed in the [src/assets/](src/assets/) folder and referenced by filename in the books.json data file.
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v18 or higher)
+
+### Installation
+
+```bash
+# Install dependencies
+npm install
+```
+
+### Development
+
+```bash
+npm run dev
+```
+
+Starts the development server at `http://localhost:5173` with Hot Module Replacement (HMR) enabled.
+
+### Build
+
+```bash
+npm run build
+```
+
+Creates an optimized production build in the `dist/` folder. TypeScript checks are performed before building.
+
+### Preview
+
+```bash
+npm run preview
+```
+
+Serves the production build locally for testing before deployment.
+
+### Linting
+
+```bash
+npm run lint
+```
+
+Runs ESLint to check code quality and catch potential issues.
+
+## Adding Books
+
+To add new books to the library:
+
+1. Add a book entry to [src/data/books.json](src/data/books.json)
+2. Place the cover image in [src/assets/](src/assets/) with the matching filename
+3. The book will automatically appear in the shelf after refresh
+
+## Contributing
+
+When making changes:
+- Ensure TypeScript compilation passes: `npm run build:types`
+- Run the linter: `npm run lint`
+- Test locally: `npm run dev`

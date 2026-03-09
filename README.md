@@ -113,6 +113,5 @@ To add new books to the library:
 ## Contributing
 
 When making changes:
-- Ensure TypeScript compilation passes: `npm run build:types`
-- Run the linter: `npm run lint`
+- Ensure TypeScript compilation passes: `npm run build`
 - Test locally: `npm run dev`

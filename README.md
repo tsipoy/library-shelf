@@ -19,49 +19,11 @@ Library Shelf is designed to manage and display a personal or organizational boo
 - **ESLint** - Code linting
 - **PostCSS & Autoprefixer** - CSS processing
 
-## Project Structure
-
-```
-src/
-├── components/
-│   └── main/
-│       └── DisplayedBooks/     # Book card grid component
-├── data/
-│   └── books.json              # Book collection data
-├── assets/                      # Book cover images
-├── App.tsx                      # Main app component
-├── main.tsx                     # Entry point
-└── index.css                    # Global styles
-```
-
-### Data Format
-
-Books are stored in [src/data/books.json](src/data/books.json) with the following structure:
-
-```json
-{
-  "books": [
-    {
-      "id": "1",
-      "title": "Book Title",
-      "author": "Author Name",
-      "category": "Category Name",
-      "cover": "image-filename.jpg",
-      "borrowed": false
-    }
-  ]
-}
-```
-
-### Assets
-
-Book cover images should be placed in the [src/assets/](src/assets/) folder and referenced by filename in the books.json data file.
-
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js (v18 or higher)
+- Node.js (v20.19 or higher, or v22.12 or higher)
 
 ### Installation
 

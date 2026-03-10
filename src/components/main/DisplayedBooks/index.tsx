@@ -1,8 +1,15 @@
 import bookData from '../../../data/books.json'
 
 const DisplayedBooks = () => {
+    // Statically import all assets for proper Vite bundling and hashing
+    const imageModules = import.meta.glob<string>(
+        '../../../assets/*.{jpg,jpeg,png,gif,svg}',
+        { eager: true, import: 'default' }
+    )
+
     const getImageUrl = (imageName: string) => {
-        return new URL(`../../../assets/${imageName}`, import.meta.url).href
+        const key = `../../../assets/${imageName}`
+        return imageModules[key] || ''
     }
 
     const books = bookData.books.map((book) => {

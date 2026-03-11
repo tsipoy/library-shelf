@@ -5,15 +5,16 @@ import { getImageUrl } from 'utils/utilities'
 const DisplayedBooks = () => {
 
     const books = (bookData as { books: Book[] }).books.map((book) => {
+        const imageUrl = getImageUrl(book.cover)
         return (
             <div
                 key={book.id}
                 className="w-64 rounded-lg overflow-hidden bg-white shadow-md hover:shadow-xl hover:translate-y-[-4px] transition-all duration-300 h-full flex flex-col"
             >
                 <div className="relative w-full overflow-hidden bg-gray-100" style={{ aspectRatio: '2/3' }}>
-                    {getImageUrl(book.cover) && (
+                    {imageUrl && (
                         <img
-                            src={getImageUrl(book.cover)}
+                            src={imageUrl}
                             alt={book.title}
                             className="w-full h-full object-cover block"
                             width={200}

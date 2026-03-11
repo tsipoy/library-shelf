@@ -1,31 +1,25 @@
-import bookData from '../../../data/books.json'
+import bookData from 'data/books.json'
+import type { Book } from 'types/books.types'
+import { getImageUrl } from 'utils/utilities'
 
 const DisplayedBooks = () => {
-    // Statically import all assets for proper Vite bundling and hashing
-    const imageModules = import.meta.glob<string>(
-        '../../../assets/*.{jpg,jpeg,png,gif,svg}',
-        { eager: true, import: 'default' }
-    )
 
-    const getImageUrl = (imageName: string) => {
-        const key = `../../../assets/${imageName}`
-        return imageModules[key] || ''
-    }
-
-    const books = bookData.books.map((book) => {
+    const books = (bookData as { books: Book[] }).books.map((book) => {
         return (
             <div
                 key={book.id}
                 className="w-64 rounded-lg overflow-hidden bg-white shadow-md hover:shadow-xl hover:translate-y-[-4px] transition-all duration-300 h-full flex flex-col"
             >
                 <div className="relative w-full overflow-hidden bg-gray-100" style={{ aspectRatio: '2/3' }}>
-                    <img
-                        src={getImageUrl(book.cover)}
-                        alt={book.title}
-                        className="w-full h-full object-cover block"
-                        width={200}
-                        height={300}
-                    />
+                    {getImageUrl(book.cover) && (
+                        <img
+                            src={getImageUrl(book.cover)}
+                            alt={book.title}
+                            className="w-full h-full object-cover block"
+                            width={200}
+                            height={300}
+                        />
+                    )}
                 </div>
                 <div className="p-4 flex flex-col gap-2 flex-grow">
                     <h3 className="m-0 text-base font-semibold text-amber-900 line-clamp-2">

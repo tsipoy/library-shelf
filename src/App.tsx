@@ -1,5 +1,5 @@
 import './App.css'
-import BookShelf from './view'
+import BookShelf from 'view'
 
 function App() {
 

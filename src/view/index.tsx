@@ -1,4 +1,4 @@
-import DisplayedBooks from "../components/main/DisplayedBooks"
+import DisplayedBooks from "components/main/DisplayedBooks"
 
 const BookShelf = () => {
     return <DisplayedBooks />

@@ -2,9 +2,22 @@ import bookData from 'data/books.json'
 import type { Book } from 'types/books.types'
 import { getImageUrl } from 'utils/utilities'
 
-const DisplayedBooks = () => {
+interface DisplayedBooksProps {
+    selectedCategory?: string | null
+    searchTerm?: string
+}
 
-    const books = (bookData as { books: Book[] }).books.map((book) => {
+const DisplayedBooks = ({ selectedCategory, searchTerm = '' }: DisplayedBooksProps) => {
+    const allBooks = (bookData as { books: Book[] }).books
+    const filteredBooks = allBooks.filter((book) => {
+        const matchesCategory = !selectedCategory || book.category === selectedCategory
+        const matchesSearch = searchTerm === '' ||
+            book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            book.author.toLowerCase().includes(searchTerm.toLowerCase())
+        return matchesCategory && matchesSearch
+    })
+
+    const books = filteredBooks.map((book) => {
         const imageUrl = getImageUrl(book.cover)
         return (
             <div
@@ -45,8 +58,14 @@ const DisplayedBooks = () => {
         )
     })
     return (
-        <div className="flex flex-wrap gap-12 py-5 justify-between">
-            {books}
+        <div className="bg-white rounded-lg shadow-sm p-6">
+            {filteredBooks.length === 0 ? (
+                <p className="text-center text-gray-500 py-12">No books found matching your criteria.</p>
+            ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    {books}
+                </div>
+            )}
         </div>
     )
 }

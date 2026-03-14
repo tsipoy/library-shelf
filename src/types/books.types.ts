@@ -6,3 +6,10 @@ export interface Book {
     cover: string
     borrowed: boolean
 }
+
+export interface CategoriesProps {
+    selectedCategory: string | null
+    onCategoryChange: (category: string | null) => void
+}
+
+

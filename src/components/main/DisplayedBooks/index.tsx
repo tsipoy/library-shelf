@@ -1,43 +1,22 @@
-import bookData from 'data/books.json'
-import { useState } from 'react'
-import type { Book } from 'types/books.types'
+import type { Book, DisplayedBooksProps } from 'types/books.types'
 import { getImageUrl } from 'utils/utilities'
-
-interface DisplayedBooksProps {
-    selectedCategory?: string | null
-    searchTerm?: string
-}
+import type { Key, ReactElement, JSXElementConstructor, ReactNode, ReactPortal } from 'react'
+import { useBookStorage } from '@/hook/useBookStorage'
+import { useBookForm } from '@/hook/useBookForm'
+import { useFilteredBooks } from '@/hook/useFilteredBooks'
 
 const DisplayedBooks = ({ selectedCategory, searchTerm = '' }: DisplayedBooksProps) => {
-    const [updateBookList, setUpdateBookList] = useState(bookData);
-    const [isFormOpen, setIsFormOpen] = useState(false);
-    const [inputValue, setInputValue] = useState({
-        id: '',
-        title: '',
-        author: '',
-        category: '',
-        cover: '',
-        borrowed: false
-    });
-
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setInputValue((prev) => ({
-            ...prev,
-            [name]: value
-        }));
-    }
+    const { updateBookList, setUpdateBookList } = useBookStorage()
+    const { isFormOpen, setIsFormOpen, inputValue, handleInputChange, resetForm } = useBookForm()
 
     const allBooks = (updateBookList as { books: Book[] }).books
-    const filteredBooks = allBooks.filter((book) => {
-        const matchesCategory = !selectedCategory || book.category === selectedCategory
-        const matchesSearch = searchTerm === '' ||
-            book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            book.author.toLowerCase().includes(searchTerm.toLowerCase())
-        return matchesCategory && matchesSearch
+    const filteredBooks = useFilteredBooks({
+        books: allBooks,
+        selectedCategory,
+        searchTerm
     })
 
-    const books = filteredBooks.map((book) => {
+    const books = filteredBooks.map((book: { cover: string; id: Key | null | undefined; title: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined; author: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined; category: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined; borrowed: any }) => {
         const imageUrl = getImageUrl(book.cover)
         return (
             <div
@@ -48,7 +27,7 @@ const DisplayedBooks = ({ selectedCategory, searchTerm = '' }: DisplayedBooksPro
                     {imageUrl && (
                         <img
                             src={imageUrl}
-                            alt={book.title}
+                            alt={String(book.title) || 'Book cover'}
                             className="w-full h-full object-cover block"
                             width={200}
                             height={300}
@@ -120,7 +99,7 @@ const DisplayedBooks = ({ selectedCategory, searchTerm = '' }: DisplayedBooksPro
                             </button>
                             <button onClick={() => {
                                 setUpdateBookList({ books: [...updateBookList.books, { ...inputValue, id: Date.now().toString() }] });
-                                setInputValue({ id: '', title: '', author: '', category: '', cover: '', borrowed: false });
+                                resetForm();
                                 setIsFormOpen(false);
                             }} className="bg-amber-600 hover:bg-amber-700 text-white font-semibold py-2 px-6 rounded-lg transition-colors">
                                 Add Book

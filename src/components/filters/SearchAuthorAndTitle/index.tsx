@@ -1,7 +1,4 @@
-interface SearchAuthorAndTitleProps {
-    searchTerm: string
-    onSearchChange: (term: string) => void
-}
+import type { SearchAuthorAndTitleProps } from "@/types/books.types"
 
 const SearchAuthorAndTitle = ({ searchTerm, onSearchChange }: SearchAuthorAndTitleProps) => {
     return (

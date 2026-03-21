@@ -1,9 +1,7 @@
-import bookData from 'data/books.json'
-import type { Book, CategoriesProps } from 'types/books.types'
+import { uniqueCategories } from '@/utils/lists'
+import type { CategoriesProps } from 'types/books.types'
 
 const Categories = ({ selectedCategory, onCategoryChange }: CategoriesProps) => {
-    const allBooks = (bookData as { books: Book[] }).books;
-    const uniqueCategories = Array.from(new Set(allBooks.map((book) => book.category))).sort();
 
     return (
         <div className="flex flex-wrap gap-3 mb-8">

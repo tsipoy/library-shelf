@@ -2,12 +2,12 @@ import type { Book, DisplayedBooksProps } from 'types/books.types'
 import { getImageUrl } from 'utils/utilities'
 import type { Key, ReactElement, JSXElementConstructor, ReactNode, ReactPortal } from 'react'
 import { useBookStorage } from '@/hook/useBookStorage'
-import { useBookForm } from '@/hook/useBookForm'
+import { useAddNewBooks } from '@/hook/useAddNewBooks'
 import { useFilteredBooks } from '@/hook/useFilteredBooks'
 
 const DisplayedBooks = ({ selectedCategory, searchTerm = '' }: DisplayedBooksProps) => {
     const { updateBookList, setUpdateBookList } = useBookStorage()
-    const { isFormOpen, setIsFormOpen, inputValue, handleInputChange, resetForm } = useBookForm()
+    const { isFormOpen, setIsFormOpen, inputValue, handleInputChange, resetForm } = useAddNewBooks()
 
     const allBooks = (updateBookList as { books: Book[] }).books
     const filteredBooks = useFilteredBooks({

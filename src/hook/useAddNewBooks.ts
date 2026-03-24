@@ -5,7 +5,7 @@ interface InputValue extends Omit<Book, 'id'> {
     id: string
 }
 
-export const useBookForm = () => {
+export const useAddNewBooks = () => {
     const [isFormOpen, setIsFormOpen] = useState(false)
     const [inputValue, setInputValue] = useState<InputValue>({
         id: '',

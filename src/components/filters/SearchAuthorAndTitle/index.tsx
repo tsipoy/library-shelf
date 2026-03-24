@@ -19,4 +19,4 @@ const SearchAuthorAndTitle = ({ searchTerm, onSearchChange }: SearchAuthorAndTit
     )
 }
 
-export default SearchAuthorAndTitle
+export default SearchAuthorAndTitle;
